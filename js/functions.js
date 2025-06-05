@@ -2,11 +2,10 @@ function measureString(str, maxStr) {
   const result = str.length <= maxStr;
   return !result;
 }
-console.log('длина строки: ' + measureString('asdfghjk', 5));
+
 
 function palindrome(str) {
   str = str.replaceAll(' ', '');
-  console.log(str);
   str = str.toLowerCase();
   let newStr = '';
 
@@ -15,12 +14,10 @@ function palindrome(str) {
   }
 
   if(newStr === str) {
-    console.log(`Строка ${ str } является палиндромом`);
+    let palindrom = `Строка ${ str } является палиндромом`;
+    return palindrom;
   }
 }
-//palindrome('потоп');
-palindrome('Лёша на полке клопа нашёл ');
-//palindrome('потопj');
 
 
 function returNumber(str) {
@@ -35,7 +32,5 @@ function returNumber(str) {
   }
 
   strNumber = Number(strNumber);
-  //console.log(strNumber);
-return strNumber;
+  return strNumber;
 }
-console.log('Возврат чисел из строки: ' + returNumber('ECMAScript 2022'));
