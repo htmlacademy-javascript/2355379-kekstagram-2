@@ -1,5 +1,5 @@
 function measureString(str, maxStr) {
-  let result = str.length <= maxStr;
+  const result = str.length <= maxStr;
   return !result;
 }
 console.log('длина строки: ' + measureString('asdfghjk', 5));
@@ -10,12 +10,12 @@ function palindrome(str) {
   str = str.toLowerCase();
   let newStr = '';
 
-  for(let i = str.length-1; i >= 0; i--) {
+  for(let i = str.length - 1; i >= 0; i--) {
     newStr += str[i];
   }
 
   if(newStr === str) {
-    console.log('Строка ' + '\"' + str + '\"' + ' является палиндромом');
+    console.log(`Строка ${ str } является палиндромом`);
   }
 }
 //palindrome('потоп');
