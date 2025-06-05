@@ -35,7 +35,7 @@ function returNumber(str) {
   }
 
   strNumber = Number(strNumber);
-  console.log(strNumber);
+  //console.log(strNumber);
 return strNumber;
 }
-returNumber('ECMAScript 2022');
+console.log('Возврат чисел из строки: ' + returNumber('ECMAScript 2022'));
