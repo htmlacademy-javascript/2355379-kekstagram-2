@@ -12,7 +12,6 @@ function palindrome(str) {
 
   for(let i = str.length-1; i >= 0; i--) {
     newStr += str[i];
-
   }
 
   if(newStr === str) {
@@ -23,18 +22,20 @@ function palindrome(str) {
 palindrome('Лёша на полке клопа нашёл ');
 //palindrome('потопj');
 
-function returNumber(str) {
-  let strNumber = 0;
 
-  for(let i = str.length-1; i >= 0; i++){
-    let symbol = parseInt(str[i], 2);
-    console.log(symbol);
-    if(!(Number.isNaN(symbol))){
-      strNumber += symbol;
+function returNumber(str) {
+  let strNumber = ''; // полученное число в виде строки
+  let symbolStr; // отдельный символ
+
+  for(let i = 0; i <= str.length; i++) {
+    symbolStr = parseInt(str[i], 10);
+    if(!Number.isNaN(symbolStr)) {
+      strNumber += symbolStr.toString();
     }
-    return strNumber;
   }
 
+  strNumber = Number(strNumber);
+  console.log(strNumber);
+return strNumber;
 }
-
 returNumber('ECMAScript 2022');
