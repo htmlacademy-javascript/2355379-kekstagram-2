@@ -19,7 +19,7 @@ const CREATE_DESCRIPTION_PHOTO = () => {
 
   const randomComments = [];
 
-  let randomRepeat = getRandomInteger(0, 30);
+  const randomRepeat = getRandomInteger(0, 30);
 
   for(let i = 0; i < randomRepeat; i++) {
     randomComments.push(COMMENTS[getRandomInteger(0, COMMENTS.length - 1)]);
@@ -33,6 +33,6 @@ const CREATE_DESCRIPTION_PHOTO = () => {
     names: NAMES[randomName]
   };
 };
-const DESCRIPTION_PHOTO = CREATE_DESCRIPTION_PHOTO();
+
 
 export {CREATE_DESCRIPTION_PHOTO};
