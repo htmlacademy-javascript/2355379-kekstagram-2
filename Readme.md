@@ -1,12 +1,12 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Игорь Алексеевич](https://up.htmlacademy.ru/javascript-individual/2/user/2355379).
-* Наставник: `Павел Ившин`.
+* Наставник: `Анастасия Гущина`.
 
 ---
 
 _Не удаляйте и не изменяйте самовольно файлы и папки:_
-_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.json`, `package.json`., `.github`_
+_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `package-lock.json`, `package.json`, `.github`_
 
 ---
 
