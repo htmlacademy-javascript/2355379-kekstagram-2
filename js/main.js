@@ -71,7 +71,6 @@ const createPhotos = () => {
     };
     photos.push(photo);
   }
-  console.log(photos);
   return createPhotos;
 
 };
