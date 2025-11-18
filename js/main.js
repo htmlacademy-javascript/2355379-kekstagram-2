@@ -14,20 +14,7 @@ function createIdGenerator () {
 	};
 }
 
-const id = createIdGenerator(); // console.log(id());
-
-const url = createIdGenerator(); // console.log(`photos/${url()}.jpg`);
-
-function createRandomIdFromRangeGenerator (min, max) {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-}
-const like = createRandomIdFromRangeGenerator(15, 200);
+const getId = createIdGenerator();
 
 const NAMES = [
   'Анна',
@@ -44,7 +31,7 @@ const NAMES = [
   'Михаил'
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.',
@@ -52,37 +39,41 @@ const MESSAGE = [
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-]
+];
 
-const urlAvatar = createRandomIdFromRangeGenerator(1, 6);
+const getRandomItem = (items) => items[getRandomInteger(0, items.length - 1)];
 
-const randomMessageIndex = getRandomInteger(0, MESSAGE.length - 1);
+const createComments = () => {
+  const comments = [];
 
-const randomQuantity = getRandomInteger(1, 2);
-
-const createRandomMessage = () => {
-  let randomMessage = '';
-  for(let i = randomQuantity; i >= 0; --i) {
-    randomMessage += ' ' + MESSAGE[getRandomInteger(0, MESSAGE.length - 1)];
+  for(let i = 0; i <= getRandomInteger(0, 30); i++) {
+    const comment = {
+      id: getId(),
+      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+      message: getRandomItem(MESSAGES),
+      name: getRandomItem(NAMES)
+    };
+    comments.push(comment);
   }
-  return randomMessage;
+  return comments;
 };
 
-const photoUser = createIdGenerator();
-for(let i = 25; i > 0; --i) {
-  const createDescriptionPhotoUser = () => (
-    {
-    id: photoUser(),
-    url: `photos/${url()}.jpg`,
-    description: 'Перед нами интересная, необычная фотография.',
-    likes: like(),
-    comments:
-      {
-        id: id(),
-        avatar: `img/avatar-${urlAvatar()}.svg`,
-        message: createRandomMessage(),
-        name: NAMES[getRandomInteger(0, NAMES.length - 1)]
-      }
-    });
+const createPhotos = () => {
+  const photos = [];
 
-}
+  for(let i = 1; i <= 25; i++) {
+    const photo = {
+      id: i,
+      url: `photos/${i}.jpg`,
+      description: 'Перед нами интересная, необычная фотография.',
+      likes: getRandomInteger(15, 200),
+      comments: createComments()
+    };
+    photos.push(photo);
+  }
+  console.log(photos);
+  return createPhotos;
+
+};
+
+createPhotos();
