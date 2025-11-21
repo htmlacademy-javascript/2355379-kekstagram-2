@@ -19,6 +19,4 @@ const createPhotos = () => {
 };
 createPhotos();
 
-//console.log(createPhotos());
-
 export {createPhotos};
