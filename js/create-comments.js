@@ -1,5 +1,16 @@
 import {NAMES, MESSAGES} from './constants.js';
-import {getRandomInteger, getId, getRandomItem} from './util.js';
+import {getRandomInteger, getRandomItem} from './util.js';
+
+function createIdGenerator () {
+	let lastGeneratedId = 0;
+
+  return function () {
+		lastGeneratedId += 1;
+		return lastGeneratedId;
+	};
+}
+
+const getId = createIdGenerator();
 
 const createComments = () => {
   const comments = [];

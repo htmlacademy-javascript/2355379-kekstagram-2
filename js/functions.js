@@ -25,3 +25,8 @@ const getNumbers = (string) => {
 	num = parseFloat(num);
 	return num;
 };
+
+// Делу — время.
+const checkMeetingTime = () => {
+
+}
