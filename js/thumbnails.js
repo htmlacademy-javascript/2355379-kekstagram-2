@@ -21,5 +21,5 @@ photoMiniatures.forEach((photo) => {
 container.appendChild(fragment);
 //console.log(container);
 
-
-
+export {container};
+export {photoMiniatures};

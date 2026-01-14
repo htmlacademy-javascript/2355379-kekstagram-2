@@ -8,7 +8,7 @@ const createPhotos = () => {
     const photo = {
       id: i,
       url: `photos/${i}.jpg`,
-      description: 'Перед нами интересная, необычная фотография.',
+      description: 'Перед нами интересная, необычная фотография!',
       likes: getRandomInteger(15, 200),
       comments: createComments()
     };
