@@ -1,27 +1,42 @@
-import { container } from './thumbnails.js';
+//import { container } from './thumbnails.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
-
 // выбирает картинку внутри div-а .big-picture-img
 const bigPictureImg = document.querySelector('.big-picture__img img');
-
 const likesCount = document.querySelector('.likes-count');
-
 const description = document.querySelector('.social__caption');
-
 const socialCommentCount = document.querySelector('.social__comment-count');
-
 const commentsLoader = document.querySelector('.comments-loader');
-
 const socialCommentTotalCount = document.querySelector('.social__comment-total-count');
-
 const socialComments = document.querySelector('.social__comments');
-
 // использовать один из комментов как шаблон:
 const socialComment = document.querySelector('.social__comment');
+const cancelButton = document.querySelector('.big-picture__cancel');
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
+// создание обработчика:
+const onEscapeKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    closeBigPicture();
+  }
+};
+
+// создает комменты
+const renderComments = (comments) => {
+  const fragment = document.createDocumentFragment();
+  comments.forEach((comment) => {
+    const commentTemplate = socialComment.cloneNode(true);
+    const commentAuthor = commentTemplate.querySelector('.social__picture');
+    commentAuthor.src = comment.avatar;
+    commentAuthor.alt = comment.name;
+    commentTemplate.querySelector('.social__text').textContent = comment.message;
+
+    fragment.appendChild(commentTemplate);
+  });
+  socialComments.appendChild(fragment);
+};
 
 //функция открытия окна с большой картинкой
 const openBigPicture = (photo) => {
@@ -30,6 +45,7 @@ const openBigPicture = (photo) => {
   body.classList.add('modal-open');
 
   bigPictureImg.src = photo.url;
+  bigPictureImg.alt = photo.description;
 
   likesCount.textContent = photo.likes;
 
@@ -39,27 +55,30 @@ const openBigPicture = (photo) => {
 
   // очистить от комментов socialComment
   socialComments.innerHTML = '';
-  console.log(socialComment);
+  renderComments(photo.comments);
 
   socialCommentCount.classList.add('hidden');
 
   commentsLoader.classList.add('hidden');
-
-
+  //удаление обработчика:
+  document.addEventListener('keydown', onEscapeKeydown);
 };
 
-const renderComments = (comments) => {
-  comments.forEach
+function closeBigPicture () {
+  body.classList.remove('modal-open');
+  bigPicture.classList.add('hidden');
+  socialComments.innerHTML = '';
+  bigPictureImg.src = '';
+  bigPictureImg.alt = '';
+  likesCount.textContent = '';
+  description.textContent = '';
+  socialCommentTotalCount.textContent = '';
+  //удаление обработчика:
+  document.removeEventListener('keydown', onEscapeKeydown);
 }
 
-
-container.addEventListener('click', (evt) => {
-  // Нажатие на элементе .picture или на любом его дочернем (возвращает сам элемент):
-  const currentContainer = evt.target.closest('.picture');
-  //console.log(currentContainer);
-  if(currentContainer) {
-
-  }
+cancelButton.addEventListener('click', () => {
+  closeBigPicture();
 });
 
 

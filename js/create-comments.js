@@ -2,12 +2,12 @@ import {NAMES, MESSAGES} from './constants.js';
 import {getRandomInteger, getRandomItem} from './util.js';
 
 function createIdGenerator () {
-	let lastGeneratedId = 0;
+  let lastGeneratedId = 0;
 
   return function () {
-		lastGeneratedId += 1;
-		return lastGeneratedId;
-	};
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
 }
 
 const getId = createIdGenerator();
