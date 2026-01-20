@@ -1,4 +1,4 @@
-import { renderComments, clearComments } from './comments.js';
+import { initComments, clearComments } from './comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const body = document.querySelector('body');
@@ -32,11 +32,9 @@ const openBigPicture = (photo) => {
 
   description.textContent = photo.description;
 
-
-
   // очистить от комментов socialComment
   clearComments();
-  renderComments(photo.comments);
+  initComments(photo.comments);
 
 
   //удаление обработчика:
@@ -46,7 +44,9 @@ const openBigPicture = (photo) => {
 function closeBigPicture () {
   body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
+
   clearComments();
+
   bigPictureImg.src = '';
   bigPictureImg.alt = '';
   likesCount.textContent = '';
