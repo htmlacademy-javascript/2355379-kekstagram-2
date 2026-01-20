@@ -40,6 +40,7 @@ photoMiniatures.forEach((photo) => {
   thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
 
+
   fragment.appendChild(thumbnail);
 
 });
