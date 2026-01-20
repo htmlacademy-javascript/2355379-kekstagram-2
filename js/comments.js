@@ -26,6 +26,13 @@ const renderComments = (comments) => {
     fragment.appendChild(commentTemplate);
   });
   socialComments.appendChild(fragment);
+  socialCommentCount.textContent = count;
+
+  if(count >= totalComments.length) {
+    commentsLoader.classList.add('hidden');
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
 };
 
 const clearComments = () => {
@@ -37,11 +44,16 @@ const initComments = (comments) => {
   count = Math.min(COMMENTS_COUNT, comments.length);
   totalComments = comments;
   socialCommentTotalCount.textContent = comments.length;
-  socialCommentCount.textContent = count;
+
   renderComments(totalComments.slice(0, count));
 };
 
 commentsLoader.addEventListener('click', () => {
+  const prevCount = count;
+  count = Math.min(count + COMMENTS_COUNT, totalComments.length);
+  renderComments(totalComments.slice(prevCount, count));
+
+
 
 });
 
