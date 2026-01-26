@@ -37,7 +37,7 @@ const openBigPicture = (photo) => {
   initComments(photo.comments);
 
 
-  //удаление обработчика:
+  //добавление обработчика:
   document.addEventListener('keydown', onEscapeKeydown);
 };
 
