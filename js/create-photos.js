@@ -1,7 +1,7 @@
-// 2. Отключен в mainjs
+// 2. Отключен в main.js
 
-import {getRandomInteger} from './util.js';
-import {createComments} from './create-comments.js';
+//import {getRandomInteger} from './util.js';
+//import {createComments} from './create-comments.js';
 
 const createPhotos = () => {
   const photos = [];

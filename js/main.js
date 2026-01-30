@@ -1,7 +1,7 @@
 
 import { createPhotos } from './create-photos.js';
 
-//import { renderMiniatures } from './thumbnails.js';
+import { renderMiniatures } from './thumbnails.js';
 import {openForm} from './validate-form.js';
 import './fetch.js';
 
