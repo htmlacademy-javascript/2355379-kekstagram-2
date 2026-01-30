@@ -1,3 +1,5 @@
+// 2. Отключен в mainjs
+
 import {getRandomInteger} from './util.js';
 import {createComments} from './create-comments.js';
 
