@@ -166,5 +166,5 @@ UploadForm.addEventListener('submit', (evt) => {
 onClickSmaller.addEventListener('click', onScaleSmallerButtonClick);
 onClickBigger.addEventListener('click', onScaleBiggerButtonClick);
 
-export { openForm, closeForm, resetValidate, resetImgScale };
+export { onCancelClick, openForm, closeForm, resetValidate, resetImgScale };
 
