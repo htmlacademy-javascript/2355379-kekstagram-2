@@ -4,6 +4,7 @@ import { createPhotos } from './create-photos.js';
 
 import { renderMiniatures } from './thumbnails.js';
 import {openForm} from './validate-form.js';
+import { initUploadFile } from './foto.js';
 
 
 import { openBigPicture } from './full-size-image.js';
@@ -14,4 +15,4 @@ renderMiniatures(photos);
 
 openForm();
 
-
+initUploadFile();
