@@ -1,4 +1,20 @@
+import { sendData } from './server.js';
+import { showSuccess, showError } from './success-failure.js';
+//import { onCancelButton } from './form.js';
+import { resetEffects } from './effects.js';
+
 const HASHTAGS_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const STEP = 25;
+const MIN_VALUE = 25;
+const MAX_VALUE = 100;
+
+const form = document.querySelector('.img-upload__form');
+const submitFormButton = form.querySelector('.img-upload__submit');
+const imgEffect = document.querySelector('.img-upload__preview img');
+const scaleControl = document.querySelector('.scale__control--value');
+const onClickSmaller = document.querySelector('.scale__control--smaller');
+const onClickBigger = document.querySelector('.scale__control--bigger');
 
 const formUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -12,13 +28,13 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onEscapeKeydown = (evt) => {
   if(isEscapeKey(evt)) {
-    console.log('ЗАКРЫТИЕ');
     closedForm();
   }
 };
 imgUploadCancel.addEventListener('click', () => {
   closedForm();
 });
+
 // создание обработчика:
 function closedForm () {
   formUploadOverlay.classList.add('hidden');
@@ -32,6 +48,35 @@ const ErrorMessage = {
   INVALID: 'невалидный хэштег',
   COUNT: 'превышено количество хэштегов',
   REPEAT: 'хэштеги повторяются'
+};
+
+const resetImgScale = () => {
+  imgEffect.style.transform = 'scale(1)';
+  scaleControl.value = '100%';
+};
+
+function changePicture() {
+  const value = parseInt(scaleControl.value, 10);
+  const scaleNumber = value / 100;
+  imgEffect.style.transform = `scale(${scaleNumber})`;
+}
+
+const onScaleSmallerButtonClick = () => {
+  let currentValue = parseInt(scaleControl.value, 10);
+  if (currentValue > MIN_VALUE) {
+    currentValue -= STEP;
+    scaleControl.value = `${currentValue}%`;
+    changePicture();
+  }
+};
+
+const onScaleBiggerButtonClick = () => {
+  let currentValue = parseInt(scaleControl.value, 10);
+  if (currentValue < MAX_VALUE) {
+    currentValue += STEP;
+    scaleControl.value = `${currentValue}%`;
+    changePicture();
+  }
 };
 
 const openForm = () => {
@@ -85,12 +130,41 @@ const getErrorText = (value) => {
   return 'Ошибка';
 };
 
+const resetValidate = () => pristine.reset();
+
+const onCancelClick = () => {
+  formUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  form.reset();
+  resetValidate();
+  resetImgScale();
+  resetEffects();
+  document.removeEventListener('keydown', onCancelButton);
+};
+
 pristine.addValidator(textHashtags, validateHashtags, getErrorText);
 
 UploadForm.addEventListener('submit', (evt) => {
-
   evt.preventDefault();
-  pristine.validate();
+
+  if(pristine.validate()){
+    submitFormButton.disabled = true;
+    sendData(new FormData(evt.target))
+      .then(() => {
+        showSuccess();
+        onCancelClick();
+      })
+      .catch(() => {
+        showError();
+      })
+      .finally(() => {
+        submitFormButton.disabled = false;
+      });
+  }
 });
 
-export { openForm, closeForm };
+onClickSmaller.addEventListener('click', onScaleSmallerButtonClick);
+onClickBigger.addEventListener('click', onScaleBiggerButtonClick);
+
+export { openForm, closeForm, resetValidate, resetImgScale };
+
