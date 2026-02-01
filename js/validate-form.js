@@ -79,11 +79,32 @@ const onScaleBiggerButtonClick = () => {
   }
 };
 
+const pristine = new Pristine(formUploadOverlay, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+
+  // добавляется к errorTextParent
+  errorTextClass: 'img-upload__field-wrapper--error'
+});
+
+const resetValidate = () => pristine.reset();
+
+const onCancelClick = () => {
+  formUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  form.reset();
+  resetValidate();
+  resetImgScale();
+  resetEffects();
+  document.removeEventListener('keydown', imgUploadCancel);
+};
+
 const openForm = () => {
   imgUploadInput.addEventListener('change', () => {
     formUploadOverlay.classList.remove('hidden');
     body.classList.add('model-open');
   });
+  imgUploadCancel.addEventListener('click', onCancelClick);
   //добавление обработчика:
   document.addEventListener('keydown', onEscapeKeydown);
 };
@@ -92,14 +113,6 @@ const closeForm = () => {
   formUploadOverlay.classList.add('hidden');
   body.classList.remove('model-open');
 };
-
-const pristine = new Pristine(formUploadOverlay, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-
-  // добавляется к errorTextParent
-  errorTextClass: 'img-upload__field-wrapper--error'
-});
 
 const getHashtags = (value) => value?.trim().split(' ').filter((item) => !!item);
 
@@ -128,18 +141,6 @@ const getErrorText = (value) => {
     return ErrorMessage.REPEAT;
   }
   return 'Ошибка';
-};
-
-const resetValidate = () => pristine.reset();
-
-const onCancelClick = () => {
-  formUploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  form.reset();
-  resetValidate();
-  resetImgScale();
-  resetEffects();
-  document.removeEventListener('keydown', onCancelButton);
 };
 
 pristine.addValidator(textHashtags, validateHashtags, getErrorText);
