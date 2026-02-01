@@ -21,7 +21,6 @@ const renderComments = (comments) => {
     const commentAuthor = commentTemplate.querySelector('.social__picture');
     commentAuthor.src = comment.avatar;
     commentAuthor.alt = comment.name;
-    //commentTemplate.querySelector('.social__text').textContent = comment.message;
 
     fragment.appendChild(commentTemplate);
   });
@@ -52,9 +51,6 @@ commentsLoader.addEventListener('click', () => {
   const prevCount = count;
   count = Math.min(count + COMMENTS_COUNT, totalComments.length);
   renderComments(totalComments.slice(prevCount, count));
-
-
-
 });
 
 export { renderComments, clearComments, initComments };

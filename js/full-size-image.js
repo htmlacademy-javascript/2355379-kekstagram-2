@@ -22,7 +22,7 @@ const onEscapeKeydown = (evt) => {
 //функция открытия окна с большой картинкой
 const openBigPicture = (photo) => {
   bigPicture.classList.remove('hidden');
-  // убирает двойной скролл:
+
   body.classList.add('modal-open');
 
   bigPictureImg.src = photo.url;
@@ -35,7 +35,6 @@ const openBigPicture = (photo) => {
   // очистить от комментов socialComment
   clearComments();
   initComments(photo.comments);
-
 
   //добавление обработчика:
   document.addEventListener('keydown', onEscapeKeydown);

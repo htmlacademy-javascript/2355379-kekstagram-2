@@ -7,4 +7,16 @@ function getRandomInteger (min, max) {
 
 const getRandomItem = (items) => items[getRandomInteger(0, items.length - 1)];
 
-export {getRandomInteger, getRandomItem};
+const debounce = (callback, timeoutDelay = 500)=> {
+
+  let timeoutId;
+
+  return (...rest) => {
+
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, getRandomItem, debounce};
