@@ -1,9 +1,16 @@
 import { sendData } from './server.js';
 import { showSuccess, showError } from './success-failure.js';
-//import { onCancelButton } from './form.js';
 import { resetEffects } from './effects.js';
 
+const ErrorMessage = {
+  INVALID: 'невалидный хэштег',
+  COUNT: 'превышено количество хэштегов',
+  REPEAT: 'хэштеги повторяются',
+  COMMENT: 'длина комментария больше 140 символов'
+};
+
 const HASHTAGS_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
+const COMMENT_MAX_LENGTH = 140;
 
 const STEP = 25;
 const MIN_VALUE = 25;
@@ -19,36 +26,22 @@ const onClickBigger = document.querySelector('.scale__control--bigger');
 const formUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadInput = document.querySelector('.img-upload__input');
 const body = document.querySelector('body');
-const UploadForm = document.querySelector('.img-upload__form');
+const uploadForm = document.querySelector('.img-upload__form');
 const textHashtags = document.querySelector('.text__hashtags');
+const textComment = document.querySelector('.text__description');
 
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onEscapeKeydown = (evt) => {
-  if(isEscapeKey(evt)) {
-    closedForm();
+  if(isEscapeKey(evt) && !document.querySelector('.error')) {
+    closeForm();
   }
 };
 imgUploadCancel.addEventListener('click', () => {
-  closedForm();
+  closeForm();
 });
-
-// создание обработчика:
-function closedForm () {
-  formUploadOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  imgUploadInput.textContent = '';
-
-  document.addEventListener('keydown', onEscapeKeydown);
-}
-
-const ErrorMessage = {
-  INVALID: 'невалидный хэштег',
-  COUNT: 'превышено количество хэштегов',
-  REPEAT: 'хэштеги повторяются'
-};
 
 const resetImgScale = () => {
   imgEffect.style.transform = 'scale(1)';
@@ -102,17 +95,21 @@ const onCancelClick = () => {
 const openForm = () => {
   imgUploadInput.addEventListener('change', () => {
     formUploadOverlay.classList.remove('hidden');
-    body.classList.add('model-open');
+    body.classList.add('modal-open');
   });
   imgUploadCancel.addEventListener('click', onCancelClick);
   //добавление обработчика:
   document.addEventListener('keydown', onEscapeKeydown);
 };
 
-const closeForm = () => {
+function closeForm() {
+  imgUploadInput.value = '';
+  uploadForm.reset();
   formUploadOverlay.classList.add('hidden');
-  body.classList.remove('model-open');
-};
+  body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onEscapeKeydown);
+  pristine.reset();
+}
 
 const getHashtags = (value) => value?.trim().split(' ').filter((item) => !!item);
 
@@ -143,9 +140,21 @@ const getErrorText = (value) => {
   return 'Ошибка';
 };
 
+const validateComment = (value) => value.length <= COMMENT_MAX_LENGTH;
+
 pristine.addValidator(textHashtags, validateHashtags, getErrorText);
 
-UploadForm.addEventListener('submit', (evt) => {
+pristine.addValidator(textComment, validateComment, ErrorMessage.COMMENT);
+
+textHashtags.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+});
+
+textComment.addEventListener('keydown', (evt) => {
+  evt.stopPropagation();
+});
+
+uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   if(pristine.validate()){
