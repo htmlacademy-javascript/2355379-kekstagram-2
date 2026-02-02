@@ -19,7 +19,7 @@ const showFilters = () => {
   filtersImg.classList.remove('img-filters--inactive');
 };
 
-// Сортирует массив по убыванию  комментариев
+// Сортирует массив по убыванию комментариев
 const getDiscussedPhotos = (photos) => photos.slice().sort((a,b) => b.comments.length - a.comments.length);
 
 // Выбирает случайные фотографии от 1 до 10

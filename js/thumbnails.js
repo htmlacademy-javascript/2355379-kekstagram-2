@@ -5,10 +5,14 @@ const container = document.querySelector('.pictures');
 
 const renderMiniatures = (photos) => {
   const fragment = document.createDocumentFragment();
+  container.querySelectorAll('.picture').forEach((picture) => {
+    picture.remove();
+  });
 
   photos.forEach((photo) => {
     const thumbnail = template.cloneNode(true);
     const image = thumbnail.querySelector('.picture__img');
+
     image.src = photo.url;
     image.alt = photo.description;
 
