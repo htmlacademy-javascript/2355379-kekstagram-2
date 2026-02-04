@@ -31,14 +31,15 @@ const textHashtags = document.querySelector('.text__hashtags');
 const textComment = document.querySelector('.text__description');
 
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
+const effectLevel = document.querySelector('.img-upload__effect-level');
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onEscapeKeydown = (evt) => {
   if(isEscapeKey(evt) && !document.querySelector('.error')) {
     closeForm();
   }
 };
+
 imgUploadCancel.addEventListener('click', () => {
   closeForm();
 });
@@ -93,13 +94,16 @@ const onCancelClick = () => {
 };
 
 const openForm = () => {
+
   imgUploadInput.addEventListener('change', () => {
     formUploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
   });
   imgUploadCancel.addEventListener('click', onCancelClick);
+
   //добавление обработчика:
   document.addEventListener('keydown', onEscapeKeydown);
+
 };
 
 function closeForm() {
@@ -107,8 +111,16 @@ function closeForm() {
   uploadForm.reset();
   formUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscapeKeydown);
   pristine.reset();
+  effectLevel.classList.add('hidden');
+
+  // возврат превью к 100% размеру после повторного открытия
+  imgEffect.style.transform = 'scale(1)';
+  // очистка фильтра превью
+  imgEffect.style.filter = '';
+
+  document.removeEventListener('keydown', onEscapeKeydown);
+  imgUploadCancel.removeEventListener('click', onCancelClick);
 }
 
 const getHashtags = (value) => value?.trim().split(' ').filter((item) => !!item);
@@ -176,5 +188,5 @@ uploadForm.addEventListener('submit', (evt) => {
 onClickSmaller.addEventListener('click', onScaleSmallerButtonClick);
 onClickBigger.addEventListener('click', onScaleBiggerButtonClick);
 
-export { onCancelClick, openForm, closeForm, resetValidate, resetImgScale };
+export { openForm }; // onCancelClick, closeForm, resetValidate, resetImgScale
 
