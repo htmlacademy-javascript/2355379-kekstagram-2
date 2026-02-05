@@ -33,6 +33,7 @@ const textComment = document.querySelector('.text__description');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const effectLevel = document.querySelector('.img-upload__effect-level');
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const onEscapeKeydown = (evt) => {
   if(isEscapeKey(evt) && !document.querySelector('.error')) {
@@ -118,8 +119,7 @@ function closeForm() {
   imgEffect.style.transform = 'scale(1)';
   // очистка фильтра превью
   imgEffect.style.filter = '';
-
-  document.removeEventListener('keydown', onEscapeKeydown);
+  //document.removeEventListener('keydown', onEscapeKeydown);
   imgUploadCancel.removeEventListener('click', onCancelClick);
 }
 
@@ -184,6 +184,8 @@ uploadForm.addEventListener('submit', (evt) => {
       });
   }
 });
+
+document.removeEventListener('keydown', onEscapeKeydown);
 
 onClickSmaller.addEventListener('click', onScaleSmallerButtonClick);
 onClickBigger.addEventListener('click', onScaleBiggerButtonClick);
