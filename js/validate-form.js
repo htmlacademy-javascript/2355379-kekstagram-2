@@ -99,12 +99,12 @@ const openForm = () => {
   imgUploadInput.addEventListener('change', () => {
     formUploadOverlay.classList.remove('hidden');
     body.classList.add('modal-open');
+    document.addEventListener('keydown', onEscapeKeydown);
   });
   imgUploadCancel.addEventListener('click', onCancelClick);
 
   //добавление обработчика:
   document.addEventListener('keydown', onEscapeKeydown);
-
 };
 
 function closeForm() {
@@ -119,8 +119,9 @@ function closeForm() {
   imgEffect.style.transform = 'scale(1)';
   // очистка фильтра превью
   imgEffect.style.filter = '';
-  //document.removeEventListener('keydown', onEscapeKeydown);
+
   imgUploadCancel.removeEventListener('click', onCancelClick);
+  document.removeEventListener('keydown', onEscapeKeydown);
 }
 
 const getHashtags = (value) => value?.trim().split(' ').filter((item) => !!item);
@@ -184,8 +185,6 @@ uploadForm.addEventListener('submit', (evt) => {
       });
   }
 });
-
-document.removeEventListener('keydown', onEscapeKeydown);
 
 onClickSmaller.addEventListener('click', onScaleSmallerButtonClick);
 onClickBigger.addEventListener('click', onScaleBiggerButtonClick);
